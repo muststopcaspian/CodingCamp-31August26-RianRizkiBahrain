@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "dataModelVersion": 1,
+  "id": "sess_bc89d96a-1376-4b7e-8c71-c41cdfc2999d",
+  "title": "Build To-Do List Life Dashboard",
+  "agentMode": "vibe",
+  "workspacePaths": [
+    "d:\\WorkSpace\\Kiro\\To-Do List Life Dashboard"
+  ],
+  "rootPaths": [
+    "d:\\WorkSpace\\Kiro\\To-Do List Life Dashboard"
+  ],
+  "createdAt": "2026-09-05T01:44:19.446Z",
+  "lastModifiedAt": "2026-09-05T04:27:16.731Z",
+  "modelId": "claude-sonnet-4.5",
+  "autopilot": true,
+  "semanticReviewEnabled": true,
+  "disableAutoCompaction": false,
+  "ftaEnabled": false,
+  "workflowsEnabled": false,
+  "specPlanEnabled": false,
+  "specWorkflow": "quick",
+  "specSkipClarificationEnabled": true,
+  "status": "idle",
+  "_meta": {
+    "kiro": {
+      "policyPreset": [
+        "edit-workspace"
+      ],
+      "shellType": "powershell"
+    }
+  }
+}

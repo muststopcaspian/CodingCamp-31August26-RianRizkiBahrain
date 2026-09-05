@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="To-Do List Life Dashboard - Manage your tasks with AI-powered insights and Pomodoro timer">
+    <meta name="keywords" content="todo list, task manager, pomodoro, productivity, AI evaluation">
+    <meta name="author" content="Kiro Workspace">
+    <title>To-Do List Life Dashboard</title>
+    
+    <!-- Favicon (using emoji as placeholder) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-container">
+            <h1 class="logo">📋 TODO DASHBOARD</h1>
+            <div class="header-controls">
+                <div class="profile-pic-container" id="profilePicBtn" title="Profile">
+                    <img src="" alt="Profile" class="profile-pic hidden" id="headerProfilePic">
+                    <span class="profile-pic-placeholder" id="headerProfilePlaceholder">👤</span>
+                </div>
+                <button id="settingsBtn" class="icon-btn" title="Settings">
+                    <span class="icon">⚙️</span>
+                </button>
+                <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+                    <span class="icon" id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Greeting Section -->
+        <section class="greeting-section">
+            <div class="greeting-card">
+                <h2 class="greeting" id="greeting">Good Morning</h2>
+                <p class="user-name" id="userName">User</p>
+                <div class="datetime">
+                    <p class="time" id="currentTime">00:00:00</p>
+                    <p class="date" id="currentDate">Monday, January 1, 2026</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Left Column: Timer & Quick Links -->
+            <div class="left-column">
+                <!-- Focus Timer Section -->
+                <section class="timer-section card">
+                    <h3 class="section-title">🎯 Focus Timer</h3>
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-controls">
+                        <button id="startBtn" class="btn btn-primary">Start</button>
+                        <button id="pauseBtn" class="btn btn-secondary" disabled>Pause</button>
+                        <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                    </div>
+                    <div class="timer-info">
+                        <p id="timerStatus">Ready to focus!</p>
+                    </div>
+                </section>
+
+                <!-- Quick Links Section -->
+                <section class="quicklinks-section card">
+                    <div class="section-header">
+                        <h3 class="section-title">🔗 Quick Links</h3>
+                        <button id="addLinkBtn" class="btn-small btn-primary">+ Add</button>
+                    </div>
+                    <div class="quicklinks-list" id="quicklinksList">
+                        <!-- Quick links will be rendered here -->
+                        <p class="empty-state">No quick links yet. Add your favorites!</p>
+                    </div>
+                </section>
+
+                <!-- AI Evaluation Section -->
+                <section class="ai-section card">
+                    <h3 class="section-title">🤖 AI Evaluation</h3>
+                    <button id="evaluateBtn" class="btn btn-accent">Evaluate My Tasks</button>
+                    <div id="aiResult" class="ai-result hidden">
+                        <p class="ai-text"></p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: To-Do List -->
+            <div class="right-column">
+                <!-- To-Do List Section -->
+                <section class="todo-section card">
+                    <div class="section-header">
+                        <h3 class="section-title">✅ To-Do List</h3>
+                        <div class="todo-controls">
+                            <select id="sortTasks" class="select-small">
+                                <option value="default">Default Order</option>
+                                <option value="priority">By Priority</option>
+                                <option value="date">By Date</option>
+                                <option value="status">By Status</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Add Task Form -->
+                    <div class="add-task-form">
+                        <input 
+                            type="text" 
+                            id="taskInput" 
+                            class="input-field" 
+                            placeholder="What needs to be done?"
+                            maxlength="200"
+                        >
+                        <select id="taskPriority" class="select-field">
+                            <option value="low">Low Priority</option>
+                            <option value="medium" selected>Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                        <button id="addTaskBtn" class="btn btn-primary">Add Task</button>
+                    </div>
+
+                    <!-- Task Statistics -->
+                    <div class="task-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Total:</span>
+                            <span class="stat-value" id="totalTasks">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Active:</span>
+                            <span class="stat-value" id="activeTasks">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Completed:</span>
+                            <span class="stat-value" id="completedTasks">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Tasks List -->
+                    <div class="tasks-list" id="tasksList">
+                        <!-- Tasks will be rendered here -->
+                        <p class="empty-state">No tasks yet. Add one to get started!</p>
+                    </div>
+
+                    <!-- Clear Completed Button -->
+                    <div class="list-footer">
+                        <button id="clearCompletedBtn" class="btn btn-danger-outline">Clear Completed</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ SETTINGS</h3>
+                <button class="close-btn" id="closeSettingsBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>PROFILE PICTURE:</label>
+                    <div class="profile-upload-container">
+                        <div class="profile-preview">
+                            <img src="" alt="Profile Preview" class="profile-pic hidden" id="profilePreview">
+                            <span class="profile-preview-placeholder" id="profilePlaceholder">👤</span>
+                        </div>
+                        <label for="profilePicInput" class="file-input-label">
+                            CHOOSE PHOTO
+                        </label>
+                        <input type="file" id="profilePicInput" accept="image/*">
+                        <button id="removeProfilePicBtn" class="btn btn-small btn-danger-outline hidden">
+                            REMOVE PHOTO
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label for="userNameInput">YOUR NAME:</label>
+                    <input 
+                        type="text" 
+                        id="userNameInput" 
+                        class="input-field" 
+                        placeholder="Enter your name"
+                        maxlength="30"
+                    >
+                </div>
+                <div class="setting-group">
+                    <label for="pomodoroTimeInput">POMODORO TIME (MINUTES):</label>
+                    <input 
+                        type="number" 
+                        id="pomodoroTimeInput" 
+                        class="input-field" 
+                        min="1" 
+                        max="60" 
+                        value="25"
+                    >
+                </div>
+                <div class="setting-group">
+                    <label for="llmApiKey">LLM API KEY (OPTIONAL):</label>
+                    <input 
+                        type="password" 
+                        id="llmApiKey" 
+                        class="input-field" 
+                        placeholder="Enter your API key for AI chatbot"
+                    >
+                    <small class="help-text">Your API key is stored locally and never shared</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveSettingsBtn" class="btn btn-primary">SAVE SETTINGS</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Link Modal -->
+    <div id="linkModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="linkModalTitle">🔗 Add Quick Link</h3>
+                <button class="close-btn" id="closeLinkBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="linkName">Link Name:</label>
+                    <input 
+                        type="text" 
+                        id="linkName" 
+                        class="input-field" 
+                        placeholder="e.g., Google, GitHub"
+                        maxlength="30"
+                    >
+                </div>
+                <div class="setting-group">
+                    <label for="linkUrl">URL:</label>
+                    <input 
+                        type="url" 
+                        id="linkUrl" 
+                        class="input-field" 
+                        placeholder="https://example.com"
+                    >
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveLinkBtn" class="btn btn-primary">Save Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editTaskModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✏️ Edit Task</h3>
+                <button class="close-btn" id="closeEditTaskBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="editTaskInput">Task Description:</label>
+                    <input 
+                        type="text" 
+                        id="editTaskInput" 
+                        class="input-field" 
+                        placeholder="Update task description"
+                        maxlength="200"
+                    >
+                </div>
+                <div class="setting-group">
+                    <label for="editTaskPriority">Priority:</label>
+                    <select id="editTaskPriority" class="select-field">
+                        <option value="low">Low Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveEditTaskBtn" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
