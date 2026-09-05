@@ -1,6 +1,6 @@
 # CodingCamp/31August2026//To-Do List Life Dashboard
 
-Web application untuk mengelola tugas harian dengan **AI CHATBOT** dan **BRUTALISM SEMI-MINIMALIST DESIGN**.
+Web-app untuk mengelola tugas harian dengan **AI CHATBOT** dan **BRUTALISM SEMI-MINIMALIST DESIGN**.
 
 ## 🚀 Fitur Utama
 
